@@ -33,6 +33,12 @@ for(let i = 0; i < rows; i++) {
         let cell = document.createElement("div");
         cell.setAttribute("class", "cell");
         cell.setAttribute("contenteditable", "true");
+        cell.setAttribute("spellcheck", "false");
+
+        //to access the cell later
+        cell.setAttribute("rid", i);
+        cell.setAttribute("cid", j);
+
         rowCellContainer.appendChild(cell);
         addressBarDisplay(cell, i, j);
     }
@@ -48,6 +54,11 @@ function addressBarDisplay(cell, i, j) {
         addressBarInputElement.value = `${colId}${rowId}`
     })
 }
+
+
+//by default click on first cell via DOM
+const firstCellElement = document.querySelector(".cell");
+firstCellElement.click();
 
 
 
