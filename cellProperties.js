@@ -14,7 +14,10 @@ for (let i = 0; i < rows; i++) {
             fontFamily: "monospace",
             fontSize: "14",
             fontColor: "#000000",
-            bgColor: "#000000" //using this color , just for indication purpose.
+            bgColor: "#000000", //using this color , just for indication purpose.
+            value: "",
+            formula: "",
+            children: []
         }
 
         sheetRow.push(cellProp);
@@ -47,7 +50,7 @@ const inactiveColorProp = "#ecf0f1";
 //attach listener to the selected elements
 boldElement.addEventListener("click", (e) => {
     const address = addressBarInputElement.value;
-    const [cell, cellProp] = activeCell(address);
+    const [cell, cellProp] = getCellAndCellProp(address);
 
     //modification
     cellProp.bold = !cellProp.bold //data change
@@ -59,7 +62,7 @@ boldElement.addEventListener("click", (e) => {
 //two way binding for italic
 itlaicElement.addEventListener("click", (e) => {
     const address = addressBarInputElement.value;
-    const [cell, cellProp] = activeCell(address);
+    const [cell, cellProp] = getCellAndCellProp(address);
 
     //modification
     cellProp.italic = !cellProp.italic //data change
@@ -71,7 +74,7 @@ itlaicElement.addEventListener("click", (e) => {
 //two way binding for underline
 underlineElement.addEventListener("click", (e) => {
     const address = addressBarInputElement.value;
-    const [cell, cellProp] = activeCell(address);
+    const [cell, cellProp] = getCellAndCellProp(address);
 
     //modification
     cellProp.underline = !cellProp.underline //data change
@@ -82,7 +85,7 @@ underlineElement.addEventListener("click", (e) => {
 //two way binding for font family
 fontFamilyElement.addEventListener("change", (e) => {
     const address = addressBarInputElement.value;
-    const [cell, cellProp] = activeCell(address);
+    const [cell, cellProp] = getCellAndCellProp(address);
 
     //modification
     cellProp.fontFamily = fontFamilyElement.value;
@@ -93,7 +96,7 @@ fontFamilyElement.addEventListener("change", (e) => {
 //two way binding for font size
 fontSizeElement.addEventListener("change", (e) => {
     const address = addressBarInputElement.value;
-    const [cell, cellProp] = activeCell(address);
+    const [cell, cellProp] = getCellAndCellProp(address);
 
     //modification
     cellProp.fontSize = fontSizeElement.value;
@@ -104,7 +107,7 @@ fontSizeElement.addEventListener("change", (e) => {
 //two binding for font color
 fontColorElement.addEventListener("change", (e) => {
     const address = addressBarInputElement.value;
-    const [cell, cellProp] = activeCell(address);
+    const [cell, cellProp] = getCellAndCellProp(address);
 
     //modification
     cellProp.fontColor = fontColorElement.value;
@@ -118,7 +121,7 @@ fontColorElement.addEventListener("change", (e) => {
 bgColorElement.addEventListener("change", (e) => {
     //cell access
     const address = addressBarInputElement.value;
-    const [cell, cellProp] = activeCell(address);
+    const [cell, cellProp] = getCellAndCellProp(address);
 
     //modification
     cellProp.bgColor = bgColorElement.value;
@@ -131,7 +134,7 @@ alignmentElement.forEach((alignElement) => {
     alignElement.addEventListener("click", (e) => {
         //cell access
         const address = addressBarInputElement.value;
-        const [cell, cellProp] = activeCell(address);
+        const [cell, cellProp] = getCellAndCellProp(address);
 
         const alignValue = e.target.classList[0];
 
@@ -179,7 +182,7 @@ function addListenerToCellProps(cell) {
         cell.style.fontSize = cellProp.fontSize + "px";
         cell.style.fontFamily = cellProp.fontFamily;
         cell.style.color = cellProp.fontColor;
-        cell.style.backgroundColor = cellProp.bgColor  === "#000000" ? "transparent" : cellProp.bgColor;
+        cell.style.backgroundColor = cellProp.bgColor === "#000000" ? "transparent" : cellProp.bgColor;
         cell.style.textAlign = cellProp.alignment;
 
         //apply UI for icons (to display, this property is applied)
@@ -208,11 +211,16 @@ function addListenerToCellProps(cell) {
                 rightAlignElement.style.backgroundColor = acitveColorProp;
                 break;
         }
+
+        //removing the last formula in input Element after clicking to the next cell
+        const formulaBarInputElement = document.querySelector(".formula-bar");
+        formulaBarInputElement.value = cellProp.formula;
+        cell.value = cellProp.value;
     });
 }
 
 
-function activeCell(address) {
+function getCellAndCellProp(address) {
     const [rid, cid] = decodeIdAddress(address);
 
     //acess cell and storage object
@@ -223,7 +231,7 @@ function activeCell(address) {
 
 function decodeIdAddress(address) {
     const rid = Number(address.slice(1) - 1);
-    const cid = Number(address.charCodeAt(0) - 65);
+    const cid = Number(address.charCodeAt(0)) - 65;
     return [rid, cid];
 }
 
