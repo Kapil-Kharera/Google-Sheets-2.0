@@ -221,6 +221,7 @@ function addListenerToCellProps(cell) {
 
 
 function getCellAndCellProp(address) {
+    // console.log(address);
     const [rid, cid] = decodeIdAddress(address);
 
     //acess cell and storage object
@@ -230,6 +231,7 @@ function getCellAndCellProp(address) {
 }
 
 function decodeIdAddress(address) {
+    // console.log(address);
     const rid = Number(address.slice(1) - 1);
     const cid = Number(address.charCodeAt(0)) - 65;
     return [rid, cid];

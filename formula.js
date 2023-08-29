@@ -1,4 +1,4 @@
-
+//adding event listener to the all cells
 for (let i = 0; i < rows; i++) {
     for (let j = 0; j < cols; j++) {
         const cell = document.querySelector(`.cell[rid="${i}"][cid="${j}"]`);
@@ -35,8 +35,20 @@ formulaBarElement.addEventListener("keydown", (e) => {
             removeChildParentRelationship(cellProp.formula); //break the old relationship
         }
 
-        const evaluatedValue = evaluateFormula(inputFormulaValue);
+        console.log(address);
+        addChildToGraphComponent(inputFormulaValue, address);
+        
+        //checking formula is cyclic or not
+        const isCyclic = isGraphCyclic(graphComponentMatrix);
 
+        if (isCyclic === true) {
+            alert("Your formula is cylic");
+            removeChildFromGraphComponent(inputFormulaValue, address);
+            return;
+        }
+
+        const evaluatedValue = evaluateFormula(inputFormulaValue);
+        
         //To update UI & cellProp in DB
         setCellUiAndCellProp(evaluatedValue, inputFormulaValue, address); //to update UI & db
 
@@ -47,6 +59,38 @@ formulaBarElement.addEventListener("keydown", (e) => {
         console.log(sheetDB);
     }
 });
+
+
+function addChildToGraphComponent(formula, childAddress) {
+    //crid -> child row id, ccid -> child col id 
+    const [crid, ccid] = decodeIdAddress(childAddress);
+
+    const encodedFormula = formula.split(" ");
+    for (let i = 0; i < encodedFormula.length; i++) {
+        const asciiValue = encodedFormula[i].charCodeAt(0);
+
+        if (asciiValue >= 65 && asciiValue <= 90) {
+            console.log(encodedFormula);
+            const [prid, pcid] = decodeIdAddress(encodedFormula[i]);
+            graphComponentMatrix[prid][pcid].push([crid, ccid]);
+        }
+    }
+}
+
+
+function removeChildFromGraphComponent(formula) {
+    // const [crid, ccid] = decodeIdAddress(childAddress);
+
+    const encodedFormula = formula.split(" ");
+    for (let i = 0; i < encodedFormula.length; i++) {
+        const asciiValue = encodedFormula[i].charCodeAt(0);
+
+        if (asciiValue >= 65 && asciiValue <= 90) {
+            const [prid, pcid] = decodeIdAddress(encodedFormula[i]);
+            graphComponentMatrix[prid][pcid].pop();
+        }
+    }
+}
 
 
 function updateChildrenCellsValue(parentAddress) {
