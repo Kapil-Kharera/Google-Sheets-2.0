@@ -23,7 +23,7 @@ for (let i = 0; i < rows; i++) {
 const formulaBarElement = document.querySelector(".formula-bar");
 
 //event listener
-formulaBarElement.addEventListener("keydown", (e) => {
+formulaBarElement.addEventListener("keydown", async (e) => {
     const inputFormulaValue = formulaBarElement.value;
     if (e.key === "Enter" && inputFormulaValue) {
         //acessing cell and cellProp
@@ -39,10 +39,18 @@ formulaBarElement.addEventListener("keydown", (e) => {
         addChildToGraphComponent(inputFormulaValue, address);
         
         //checking formula is cyclic or not
-        const isCyclic = isGraphCyclic(graphComponentMatrix);
+        const cycleResponse = isGraphCyclic(graphComponentMatrix);
 
-        if (isCyclic === true) {
-            alert("Your formula is cylic");
+        if (cycleResponse) {
+            let response = confirm("Your formula is cyclic.Do You want to trace your path.");
+
+            while(response === true) {
+                //keep on color tracking
+                const responseAgain = await isGraphCyclicTracePath(graphComponentMatrix, cycleResponse);
+                console.log(responseAgain)
+                response = confirm("Your formula is cyclic.Do You want to trace your path.");
+            }
+
             removeChildFromGraphComponent(inputFormulaValue, address);
             return;
         }
@@ -56,7 +64,7 @@ formulaBarElement.addEventListener("keydown", (e) => {
 
         updateChildrenCellsValue(address); //udating children value recursively
 
-        console.log(sheetDB);
+        // console.log(sheetDB);
     }
 });
 

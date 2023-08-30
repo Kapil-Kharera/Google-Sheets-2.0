@@ -34,13 +34,13 @@ function isGraphCyclic(graphComponentMatrix) {
                 const response = dfsCylceDetection(graphComponentMatrix, i, j, visited, dfsVisited);
             
                 // found cylce
-                if (response == true) return true;
+                if (response == true) return [i, j];
             }
 
         }
     }
 
-    return false;
+    return null;
 }
 
 //start -> visited(True) , dfsVisite(T)
@@ -62,7 +62,7 @@ function dfsCylceDetection(graphComponentMatrix, srcr, srcc, visited, dfsVisited
             const response = dfsCylceDetection(graphComponentMatrix, nbrr, nbrc, visited, dfsVisited);
 
             if (response === true) return true;
-        }else if(dfsVisited[nbrr][nbrc] === true) {
+        }else if(visited[nbrr][nbrc] === true && dfsVisited[nbrr][nbrc] === true) {
             return true;
         }
     }
