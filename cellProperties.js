@@ -1,30 +1,34 @@
-//contians data for complete grid of cells
-let sheetDB = [];
+const collectedSheetDB = []; //contains all sheet DB
+let sheetDB = []; //contians data for complete grid of cells
 
+{
+    const addSheetBtnElement = document.querySelector(".sheet-add-icon");
+    addSheetBtnElement.click();
+}
 //there we 100 rows (arrays) created
 //and each array carry 28 objects inside it
-for (let i = 0; i < rows; i++) {
-    let sheetRow = [];
-    for (let j = 0; j < cols; j++) {
-        let cellProp = {
-            bold: false,
-            italic: false,
-            underline: false,
-            alignment: "left",
-            fontFamily: "monospace",
-            fontSize: "14",
-            fontColor: "#000000",
-            bgColor: "#000000", //using this color , just for indication purpose.
-            value: "",
-            formula: "",
-            children: []
-        }
+// for (let i = 0; i < rows; i++) {
+//     let sheetRow = [];
+//     for (let j = 0; j < cols; j++) {
+//         let cellProp = {
+//             bold: false,
+//             italic: false,
+//             underline: false,
+//             alignment: "left",
+//             fontFamily: "monospace",
+//             fontSize: "14",
+//             fontColor: "#000000",
+//             bgColor: "#000000", //using this color , just for indication purpose.
+//             value: "",
+//             formula: "",
+//             children: []
+//         }
 
-        sheetRow.push(cellProp);
-    }
+//         sheetRow.push(cellProp);
+//     }
 
-    sheetDB.push(sheetRow);
-}
+//     sheetDB.push(sheetRow);
+// }
 
 
 //selectors
@@ -215,7 +219,7 @@ function addListenerToCellProps(cell) {
         //removing the last formula in input Element after clicking to the next cell
         const formulaBarInputElement = document.querySelector(".formula-bar");
         formulaBarInputElement.value = cellProp.formula;
-        cell.value = cellProp.value;
+        cell.innerText = cellProp.value;
     });
 }
 

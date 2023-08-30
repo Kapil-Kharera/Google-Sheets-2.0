@@ -1,15 +1,15 @@
-//storage -> 2d Matrix
-const graphComponentMatrix = [];
+const collectedGraphComponentMatrix = []; //collection of all 2d matrix
+let graphComponentMatrix = []; //storage -> 2d Matrix
 
-for(let i = 0; i < rows; i++) {
-    const row = [];
-    for(let j = 0; j < cols; j++) {
-        //why array -> More than 1 child relation
-        row.push([]);
-    }
+// for(let i = 0; i < rows; i++) {
+//     const row = [];
+//     for(let j = 0; j < cols; j++) {
+//         //why array -> More than 1 child relation
+//         row.push([]);
+//     }
 
-    graphComponentMatrix.push(row);
-}
+//     graphComponentMatrix.push(row);
+// }
 
 function isGraphCyclic(graphComponentMatrix) {
     const visited = []; //Node visit trace

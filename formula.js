@@ -46,8 +46,7 @@ formulaBarElement.addEventListener("keydown", async (e) => {
 
             while(response === true) {
                 //keep on color tracking
-                const responseAgain = await isGraphCyclicTracePath(graphComponentMatrix, cycleResponse);
-                console.log(responseAgain)
+                await isGraphCyclicTracePath(graphComponentMatrix, cycleResponse);
                 response = confirm("Your formula is cyclic.Do You want to trace your path.");
             }
 

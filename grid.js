@@ -56,9 +56,7 @@ function addressBarDisplay(cell, i, j) {
 }
 
 
-//by default click on first cell via DOM
-const firstCellElement = document.querySelector(".cell");
-firstCellElement.click();
+
 
 
 
