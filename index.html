@@ -13,15 +13,15 @@
   <body>
     <div class="page-actions-container">
       <div class="page-action">Home</div>
-      <div class="page-action">File</div>
+      <div class="page-action active">File</div>
       <div class="page-action">Insert</div>
       <div class="page-action">Layout</div>
       <div class="page-action">Help</div>
     </div>
     <div class="cellprop-actions-container">
-      <span class="material-icons"> content_copy </span>
-      <span class="material-icons"> content_cut </span>
-      <span class="material-icons"> content_paste </span>
+      <span class="material-icons copy"> content_copy </span>
+      <span class="material-icons cut"> content_cut </span>
+      <span class="material-icons paste"> content_paste </span>
       <select class="font-family-prop">
         <option value="monospace">Monospace</option>
         <option value="sans-Serif">Sans-Serif</option>
@@ -48,6 +48,12 @@
         <span class="material-icons"> format_color_fill </span>
         <input type="color" class="bg-color-prop">
       </div>
+      <span class="material-icons download">
+        cloud_download
+      </span>
+      <span class="material-icons open">
+        cloud_upload
+      </span>
     </div>
     <div class="formula-actions-container">
         <input type="text" class="address-bar" readonly>
@@ -80,5 +86,7 @@
     <script src="./cellProperties.js"></script>
     <script src="./cyclicPathTrace.js"></script>
     <script src="./formula.js"></script>
+    <script src="./cutCopyPaste.js"></script>
+    <script src="./openSave.js"></script>
   </body>
 </html>
